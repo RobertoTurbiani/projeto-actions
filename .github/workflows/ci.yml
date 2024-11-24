@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,5 +18,5 @@ jobs:
             distribution: 'temurin'
             java-version: '17'
 
-      - name: Build with Maven
-        run: mvn -B package -DskipTests
+      - name: Test with Maven
+        run: mvn test
