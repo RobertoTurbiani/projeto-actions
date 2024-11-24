@@ -2,8 +2,11 @@ package actions.projeto.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculadoraServiceTest {
 
@@ -15,11 +18,15 @@ public class CalculadoraServiceTest {
 
         double a = 10;
         double b = 2;
-        double esperado = 5;
 
-        double resultado = calculadoraService.dividir(a,b);
+        var expectedMessage = "400 BAD_REQUEST\" Divisão por zero não permitida\"";
 
-        assertEquals(esperado, resultado);
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,() ->{
+                    calculadoraService.dividir(a,b);
+                });
+
+        assertEquals(expectedMessage, exception.getMessage());
 
     }
 }
