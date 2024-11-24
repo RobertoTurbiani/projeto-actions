@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CalculadoraServiceTest {
 
     @Test
-    @DisplayName("Quando acionado com 10 e 2, então deve retornar 5")
+    @DisplayName("Quando acionado com 10 e 0, então deve lançar uma exceção")
     public void testDividir(){
 
         CalculadoraService calculadoraService = new CalculadoraService();
 
         double a = 10;
-        double b = 2;
+        double b = 0;
 
         var expectedMessage = "400 BAD_REQUEST\" Divisão por zero não permitida\"";
 
