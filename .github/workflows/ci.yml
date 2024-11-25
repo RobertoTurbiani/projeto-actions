@@ -7,6 +7,7 @@ on:
       - develop
     types: [opened, reopened]
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,8 +18,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-            distribution: 'temurin'
-            java-version: '17'
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Build with Maven
         run: mvn -B package -DskipTests
@@ -37,5 +38,28 @@ jobs:
           java-version: '17'
 
       - name: Test with Maven
-      - run: mvn test
+        run: mvn test
+
+  docker:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - test
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: 0roberto/ci-example:latest
 
