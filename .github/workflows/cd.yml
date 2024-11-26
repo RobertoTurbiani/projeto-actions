@@ -1,11 +1,11 @@
 name: "Exemplo de CD"
 
-  on:
+on:
     push:
       branches:
         - main
 
-  jobs:
+jobs:
     deploy:
       runs-on: self-hosted
       steps:
