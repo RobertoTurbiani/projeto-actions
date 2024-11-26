@@ -63,3 +63,8 @@ jobs:
           push: true
           tags: 0roberto/ci-example:latest
 
+      - name: Install service
+        run: sudo ./svc.sh install
+
+      - name: Start service
+        run: sudo ./svc.sh start
